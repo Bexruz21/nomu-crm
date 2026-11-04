@@ -1,0 +1,812 @@
+<!doctype html>
+<html lang="uz">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,interactive-widget=resizes-content">
+  <meta name="theme-color" content="#172337">
+  <meta name="description" content="Google Sheets bilan ulangan oddiy leadlar CRM.">
+  <title>Leadlar — CRM</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='12' fill='%232a6df4'/%3E%3Cpath d='M12 11v18h17v-5H18V11z' fill='white'/%3E%3C/svg%3E">
+<style>
+@charset "UTF-8";
+:root{font-family:Inter,"Segoe UI",Arial,sans-serif;color:#253149;background:#f5f7fb;font-synthesis:none;font-size:14px;--blue:#2d6df6;--line:#e8ecf2;--muted:#8791a4;--sidebar:88px}
+*{box-sizing:border-box}body{margin:0}button,input,select,textarea{font:inherit}button,a,input,select,textarea{-webkit-tap-highlight-color:transparent}button,a,select{touch-action:manipulation}button{cursor:pointer}button:disabled,select:disabled{cursor:wait;opacity:.55}a{color:inherit;text-decoration:none}button,input,select,textarea,a{outline-offset:4px}:focus-visible{outline:3px solid #89adff}button{border:0}button svg,a svg{flex-shrink:0}button:disabled:hover{transform:none}::selection{background:#dbe8ff}[hidden]{display:none!important}.icon-defs{width:0;height:0;position:absolute;overflow:hidden}.icon{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}.icon.small{width:14px;height:14px}
+.sidebar{position:fixed;inset:0 auto 0 0;width:var(--sidebar);background:#19263b;color:#8e9db5;display:flex;align-items:center;flex-direction:column;z-index:10}.logo{font-size:33px;letter-spacing:-4px;font-weight:800;color:#fff;display:flex;align-items:center;justify-content:center;width:48px;height:60px;margin-top:12px;padding-right:5px}.logo span{color:#5c96ff}.sidebar-divider{width:34px;height:1px;background:#334056;margin:14px 0 22px}.side-item{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;width:62px;height:66px;border-radius:11px;font-size:10px;font-weight:600;letter-spacing:.1px;position:relative}.side-item .icon{width:24px;height:24px}.side-item.active{background:#293f63;color:#8cb6ff}.side-item.active:before{content:"";position:absolute;left:-13px;height:31px;width:3px;border-radius:0 3px 3px 0;background:#75a4ff}.sidebar-bottom{margin-top:auto;display:flex;align-items:center;flex-direction:column;gap:11px;padding:22px 0 27px}.workspace-avatar{height:35px;width:35px;display:grid;place-items:center;border-radius:11px;background:#33425a;color:#dfe8f8;font-weight:600;font-size:13px}.workspace-label{font-size:10px;text-align:center;line-height:1.6;color:#90a0b8}
+.app-shell{margin-left:var(--sidebar)}.topbar{height:76px;background:#fff;border-bottom:1px solid var(--line);padding:0 35px;display:flex;align-items:center;justify-content:space-between;gap:15px}.breadcrumb{display:flex;gap:12px;align-items:center;font-size:12px;color:#8b94a4}.breadcrumb>.icon{color:#738196;width:17px;height:17px}.breadcrumb .crumb-arrow{width:12px;height:12px;color:#afb7c5}.breadcrumb strong{font-weight:550;color:#455169}.topbar-right{display:flex;align-items:center;gap:20px}.connection{font-size:11px;display:flex;gap:7px;align-items:center;color:#778398}.connection-dot{height:6px;width:6px;border-radius:50%;background:#c1cad8}.connection.connected .connection-dot{background:#40ba8c;box-shadow:0 0 0 3px #ebf8f2}.connection.error .connection-dot{background:#e37b7b}.topbar-divider{width:1px;height:22px;background:#edf0f5}.profile{width:33px;height:33px;border-radius:50%;background:#edf2ff;color:#4f70b4;display:grid;place-items:center;font-size:11px;font-weight:650}
+main{padding:35px 35px 22px;max-width:2000px;margin:auto}.page-heading{display:flex;align-items:center;justify-content:space-between;gap:25px;margin-bottom:29px}.eyebrow{font-size:9px;font-weight:700;letter-spacing:1.65px;color:#8d97a7;display:flex;align-items:center;gap:6px;margin:0 0 10px}.eyebrow-dot{width:5px;height:5px;background:#91a3be;border-radius:50%}.title-row{display:flex;align-items:center;gap:12px}h1{font-size:31px;line-height:1.2;letter-spacing:-1.05px;margin:0;font-weight:650;color:#202d43}.total-badge{display:grid;place-items:center;font-size:12px;font-weight:600;min-width:28px;height:25px;padding:0 8px;border:1px solid #dce5f5;border-radius:7px;color:#6482b5;background:#edf2fc;margin-top:3px}.page-description{font-size:12px;color:#929bab;margin:10px 0 0}.heading-actions{display:flex;gap:10px;align-items:center;margin-top:11px}.button{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:40px;border-radius:8px;padding:10px 15px;font-size:12px;font-weight:600;white-space:nowrap;transition:background .15s,box-shadow .15s}.button .icon{width:16px;height:16px}.button-white{background:#fff;border:1px solid #dfe5ee;color:#5e6b81;box-shadow:0 1px 2px #1c315003}.button-white:hover{background:#f7f9fc;border-color:#c9d4e6}.button-primary{background:var(--blue);color:#fff;border:1px solid var(--blue);box-shadow:0 3px 6px #2d6df619}.button-primary:hover{background:#1f5ee6;box-shadow:0 4px 10px #2d6df626}.sheet-icon{color:#43a27e}.sheet-link .small{color:#9aa6b6;margin-left:3px}
+.workspace-panel{background:#fff;border:1px solid #e2e7ef;border-radius:12px;box-shadow:0 3px 12px #25355303;overflow:hidden}.toolbar{display:flex;align-items:center;gap:22px;padding:0 19px;height:65px;border-bottom:1px solid var(--line)}.view-tab{display:flex;align-items:center;gap:8px;align-self:stretch;position:relative;font-size:12px;font-weight:600;color:#3d6dce;white-space:nowrap}.view-tab:after{position:absolute;content:"";height:2px;bottom:0;background:#4c7ff3;left:0;right:0}.view-tab .icon{width:17px;height:17px}.view-tab-dot{width:4px;height:4px;background:#77a0fb;border-radius:50%;margin-left:4px}.search-wrap{position:relative;display:flex;align-items:center;width:300px;gap:9px;margin-left:7px}.search-wrap>.icon{position:absolute;left:10px;width:15px;height:15px;color:#a0aaba;pointer-events:none}.search-wrap input{font-size:11px;min-width:0;width:100%;height:34px;padding:8px 29px 8px 33px;color:#465570;background:#f8f9fc;border:1px solid #edf0f6;border-radius:7px}.search-wrap input::placeholder{color:#9ca6b6}.search-wrap input:focus{outline:2px solid #c8dcff;border-color:#c1d3f6;background:#fff}.search-wrap kbd{position:absolute;right:11px;font:10px inherit;color:#b0b8c7;border:1px solid #e3e8f0;padding:0 4px;border-radius:3px;pointer-events:none}.search-wrap:focus-within kbd{display:none}.toolbar-status{margin-left:auto;font-size:10px;color:#a1a9b8;white-space:nowrap}.notice{display:flex;align-items:center;gap:10px;padding:13px 19px;background:#fff7e9;border-bottom:1px solid #fae7c8;font-size:12px;color:#9a661f;line-height:1.6}.notice span{flex:1}.notice .icon{width:17px;height:17px}.text-button{background:transparent;color:#8f5c16;font-size:11px;font-weight:650;padding:5px;text-decoration:underline;text-underline-offset:3px}
+.board-scroll{overflow:auto;overscroll-behavior-x:contain;scrollbar-width:thin;scrollbar-color:#ccd6e6 transparent}.board{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(221px,1fr);gap:14px;min-height:460px;padding:21px 18px 25px;align-items:start;background:#fbfcfe}.column{--stage:#588af5;--stage-soft:#eaf1ff;min-width:0;min-height:390px;display:flex;flex-direction:column}.tone-blue{--stage:#588af5;--stage-soft:#eaf1ff}.tone-cyan{--stage:#57b4cf;--stage-soft:#e9f6fa}.tone-amber{--stage:#dcb35a;--stage-soft:#fff6e6}.tone-green{--stage:#65b99a;--stage-soft:#eaf7f1}.tone-slate{--stage:#9ca9bd;--stage-soft:#edf1f7}.column-heading{border-top:3px solid var(--stage);padding:15px 4px 15px;display:flex;align-items:center;gap:8px;color:#4a586f;font-size:11px;border-radius:3px 3px 0 0;margin:0 3px}.column-heading h2{font-size:12px;font-weight:600;margin:0;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}.stage-dot{width:6px;height:6px;border-radius:50%;background:var(--stage);flex-shrink:0}.column-count{background:var(--stage-soft);color:var(--stage);border-radius:5px;min-width:20px;height:19px;display:grid;place-items:center;font-size:10px;font-weight:650;padding:0 5px}.column-order{margin-left:auto;color:#c0c8d5;font-size:9px;font-weight:500;letter-spacing:1px}.column-body{display:flex;flex-direction:column;gap:12px;flex:1;min-height:325px;padding:0 2px 12px;border:1px solid transparent;border-radius:9px;transition:background .15s,border-color .15s}.column.drag-over .column-body{background:var(--stage-soft);border:1px dashed var(--stage)}.column.drag-over .empty-column{opacity:.4}.lead-card{background:white;border:1px solid #e0e6ef;border-radius:9px;padding:15px 13px 12px;box-shadow:0 2px 3px #263b5704;position:relative;transition:box-shadow .18s,border-color .18s,opacity .18s;cursor:grab}.lead-card:hover{border-color:#c6d7f1;box-shadow:0 5px 15px #304e7710}.lead-card:active{cursor:grabbing}.lead-card.dragging{opacity:.38}.lead-card.busy{opacity:.65;pointer-events:none}.card-top{display:flex;align-items:center;gap:8px;margin-bottom:13px}.source-tag{display:flex;align-items:center;gap:5px;font-size:9px;color:#6b8aba;font-weight:600;background:#f0f5ff;padding:4px 6px;border-radius:4px}.source-tag .icon{width:13px;height:13px;stroke-width:1.7}.test-badge{font-size:9px;background:#fff6df;color:#b59041;border-radius:4px;padding:3px 5px}.card-edit{width:24px;height:24px;display:grid;place-items:center;background:transparent;color:#a0acbf;border-radius:5px;margin-left:auto;padding:4px}.card-edit:hover{background:#eef3fc;color:#5483dc}.card-edit .icon{height:14px;width:14px}.card-title{display:block;font-size:14px;letter-spacing:-.2px;line-height:1.4;font-weight:650;text-align:left;background:transparent;padding:0;color:#2b3a53;max-width:100%;overflow-wrap:anywhere}.card-title:hover{color:var(--blue)}.card-company{display:flex;align-items:center;gap:6px;font-size:10px;color:#929cb0;margin:6px 0 13px;line-height:1.6;overflow-wrap:anywhere}.card-company .icon{width:12px;height:12px}.card-phone{font-size:11px;color:#64728b;display:flex;align-items:center;gap:7px;margin:0 0 11px;overflow-wrap:anywhere}.card-phone .icon{width:12px;height:12px;color:#9aa9bf}.card-phone a:hover{color:var(--blue)}.card-service{font-size:10px;line-height:1.7;color:#8c98ad;background:#f8fafd;border-radius:5px;padding:8px 9px;margin:0 0 15px;overflow-wrap:anywhere;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}.card-bottom{display:flex;align-items:center;gap:4px;padding-top:11px;border-top:1px solid #f0f2f7}.card-date{font-size:9px;color:#a0aabc;display:flex;gap:4px;align-items:center;white-space:nowrap}.card-date .icon{width:11px;height:11px}.card-status{margin-left:auto;max-width:125px;min-width:82px;font-size:9px;font-weight:600;border:1px solid transparent;color:var(--stage);background:var(--stage-soft);border-radius:5px;cursor:pointer;padding:5px 16px 5px 6px;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8' viewBox='0 0 12 12'%3E%3Cpath d='m3 4 3 3 3-3' fill='none' stroke='%238293ab' stroke-width='1.5'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 5px center;text-overflow:ellipsis}.card-status:hover{border-color:var(--stage)}.card-status option{background:white;color:#4c5a70}.empty-column{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:10px;min-height:156px;padding:22px 12px;border:1px dashed #e4e9f1;border-radius:8px;background:#f9fbfd;margin:1px 2px 0}.empty-column>.icon{width:25px;height:25px;color:#c1cad9;stroke-width:1.3}.empty-column p{font-size:10px;color:#a5afbf;line-height:1.7;margin:0;max-width:155px}.empty-column strong{font-size:10px;font-weight:500;color:#9aa6b9}.board-footer{padding:14px 20px;display:flex;justify-content:space-between;align-items:center;gap:16px;border-top:1px solid #e8edf4;font-size:10px;color:#a3adbd}.board-footer>span:first-child{display:flex;align-items:center;gap:7px}.board-footer .icon{width:13px;height:13px;color:#aab6c9}.board-footer>span:last-child{white-space:nowrap}.mobile-hint{display:none}.source-note{display:flex;align-items:center;justify-content:center;gap:6px;color:#a5afbe;font-size:10px;margin-top:21px}.meta-mark{color:#91a4c0;display:flex}.meta-mark .icon{width:19px;height:19px}.source-dot{padding:0 3px;color:#b8c1cd}
+.skeleton-card{height:210px;border:1px solid #eaf0f6;background:#fff;border-radius:9px;padding:17px}.skeleton-line{height:9px;background:#eef2f8;border-radius:4px;margin-bottom:15px;animation:pulse 1.3s ease-in-out infinite}.skeleton-line:nth-child(1){width:40%}.skeleton-line:nth-child(2){width:65%;height:14px;margin-top:25px}.skeleton-line:nth-child(3){width:85%}.skeleton-line:nth-child(4){width:55%}.spin{animation:rotate 1s linear infinite}@keyframes rotate{to{transform:rotate(360deg)}}@keyframes pulse{50%{opacity:.4}}
+dialog{border:1px solid #e1e7f1;color:#2c3950;box-shadow:0 25px 90px #15263b30;padding:0;border-radius:15px;background:white}dialog::backdrop{background:#18253e54;backdrop-filter:blur(3px)}.lead-dialog{width:560px;max-width:calc(100vw - 28px);max-height:calc(100dvh - 40px)}.lead-dialog form{display:flex;flex-direction:column;max-height:calc(100dvh - 42px)}.dialog-header{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:24px 25px 20px;border-bottom:1px solid var(--line)}.dialog-header .eyebrow{font-size:9px;margin-bottom:9px}h2{margin:0;font-size:20px;font-weight:650;letter-spacing:-.4px}.icon-button{display:grid;place-items:center;width:31px;height:31px;border-radius:7px;background:#f5f7fb;color:#8996aa}.icon-button:hover{background:#edf1f8;color:#3f4e66}.icon-button .icon{width:16px;height:16px}.dialog-body{padding:20px 25px 25px;overflow:auto;overscroll-behavior:contain}.detail-id{font-size:10px;color:#9ca7b9;letter-spacing:.25px;margin-bottom:23px;overflow-wrap:anywhere}.field{margin-bottom:18px;min-width:0}.field label{display:block;color:#65718a;font-size:11px;font-weight:600;margin-bottom:8px;line-height:1.5;overflow-wrap:anywhere}.field input,.field textarea,.field select{display:block;width:100%;border:1px solid #dfe6f0;border-radius:7px;padding:10px 12px;font-size:12px;background:#fff;color:#465570;min-height:41px;line-height:1.6;outline-offset:2px}.field input:focus,.field textarea:focus,.field select:focus{border-color:#8fb5ff;outline:2px solid #d9e7ff}.field textarea{resize:vertical;min-height:82px}.field input::placeholder,.field textarea::placeholder{color:#acb5c5}.field-help{font-size:10px;color:#9aa5b7;margin:6px 0 0}.status-select-wrap{position:relative}.status-select-wrap select{padding-left:32px}.status-indicator{width:7px;height:7px;border-radius:50%;background:var(--stage,#588af5);position:absolute;left:14px;top:17px;pointer-events:none}.metadata{border-top:1px solid var(--line);margin-top:8px;padding-top:16px;color:#7a879d;font-size:11px}.metadata summary{cursor:pointer;font-weight:550}.metadata dl{font-size:10px;display:grid;grid-template-columns:135px minmax(0,1fr);gap:12px 10px;margin:20px 0 0}.metadata dt{color:#98a3b7}.metadata dd{margin:0;overflow-wrap:anywhere;line-height:1.6;white-space:pre-wrap}.dialog-footer{border-top:1px solid var(--line);background:#fcfdff;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 25px}.dialog-footer-actions{display:flex;align-items:center;gap:8px}.button-danger-subtle{background:transparent;color:#d17c80;font-weight:500;padding-left:0;padding-right:8px}.button-danger-subtle:hover{color:#c14950}.form-error{color:#bf5159;background:#fff1f2;font-size:11px;line-height:1.6;padding:10px 12px;border-radius:6px}.delete-dialog{width:410px;max-width:calc(100vw - 28px);padding:28px;overflow:auto;max-height:calc(100dvh - 30px)}.delete-icon{background:#fff0f0;color:#df787e;border-radius:12px;width:45px;height:45px;display:grid;place-items:center;margin-bottom:20px}.delete-icon .icon{width:22px;height:22px}.delete-dialog h2{font-size:20px}.delete-dialog p{font-size:12px;line-height:1.8;color:#8792a6;margin:13px 0 0;overflow-wrap:anywhere}.delete-dialog strong{font-weight:600;color:#54627a}.delete-dialog .delete-warning{font-size:11px;color:#af8790}.delete-actions{display:flex;justify-content:flex-end;gap:9px;margin-top:27px}.button-danger{background:#de6870;color:#fff;border:1px solid #de6870}.button-danger:hover{background:#c95059}.toast-container{position:fixed;bottom:25px;right:25px;z-index:50;max-width:min(420px,calc(100vw - 30px));pointer-events:none}.toast{display:flex;align-items:center;gap:10px;background:#fff;box-shadow:0 5px 30px #233c5d20;border:1px solid #dfe8f2;border-radius:10px;padding:14px 17px;font-size:12px;line-height:1.6;color:#53627a;animation:toast-in .2s ease-out}.toast .icon{color:#42a281;width:18px;height:18px}.toast.error{border-color:#f0d5d8}.toast.error .icon{color:#d1727b}@keyframes toast-in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@media(min-width:1600px){.board{grid-auto-columns:minmax(250px,1fr);min-height:540px}.column-body{min-height:390px}.lead-card{padding:17px 15px 14px}.card-status{font-size:10px}.card-date{font-size:10px}}
+@media(max-width:1050px){main{padding:29px 24px 20px}.topbar{padding:0 24px}.toolbar-status{font-size:9px}.toolbar{gap:17px}.search-wrap{width:260px;margin-left:0}.board{grid-auto-columns:minmax(230px,1fr)}}
+.mobile-brand,.mobile-stages{display:none}
+.board{position:relative}
+.lead-card{cursor:pointer;touch-action:pan-x pan-y}
+.lead-card:active{cursor:pointer}
+.lead-card.dragging{cursor:grabbing}
+.lead-card:focus-visible{outline-offset:2px}
+.modal-open,.modal-open body{overflow:hidden;overscroll-behavior:none}
+.dialog-header,.dialog-footer{flex-shrink:0}
+.dialog-header>div{min-width:0}
+.dialog-header h2{overflow-wrap:anywhere}
+.dialog-body{min-height:0;scroll-padding:18px}
+.card-phone>a{overflow-wrap:anywhere}
+@media(max-width:720px),(max-width:1000px) and (max-height:500px){
+  :root{--sidebar:0px}
+  body{min-width:280px}
+  .sidebar{display:none}
+  .app-shell{margin-left:0;min-width:0}
+  .topbar{position:sticky;top:0;z-index:20;height:calc(56px + env(safe-area-inset-top));padding:env(safe-area-inset-top) max(16px,env(safe-area-inset-right)) 0 max(16px,env(safe-area-inset-left));background:#ffffffed;backdrop-filter:blur(12px)}
+  .breadcrumb{gap:10px;font-size:13px;min-width:0}
+  .breadcrumb>.icon,.breadcrumb>span:not(.mobile-brand){display:none}
+  .breadcrumb strong{font-weight:650;color:#354665}
+  .mobile-brand{display:block;letter-spacing:-3px;padding-right:4px;font-size:27px;font-weight:800;color:#263c5e}
+  .mobile-brand span{color:#5d91f9}
+  .topbar-right{gap:12px;min-width:0}
+  .topbar-divider{display:none}
+  .connection{display:flex;font-size:10px;gap:6px}
+  .profile{width:29px;height:29px;font-size:10px}
+  main{padding:24px max(12px,env(safe-area-inset-right)) max(18px,env(safe-area-inset-bottom)) max(12px,env(safe-area-inset-left))}
+  .page-heading{display:block;margin-bottom:20px;padding:0 3px}
+  .eyebrow{font-size:9px;letter-spacing:1.3px;margin-bottom:10px}
+  h1{font-size:30px}
+  .total-badge{height:27px;min-width:30px;font-size:13px}
+  .page-description{font-size:13px;line-height:1.6;margin-top:8px;color:#8290a6}
+  .heading-actions{margin-top:18px;gap:10px}
+  .button{min-height:46px;font-size:13px;padding:11px 13px;border-radius:9px}
+  .button .icon{width:18px;height:18px}
+  .heading-actions .button{flex:1;min-width:0}
+  .sheet-link .small{width:13px;height:13px;margin-left:0}
+  .workspace-panel{border-radius:12px;min-width:0}
+  .toolbar{height:auto;min-height:111px;flex-wrap:wrap;gap:0 12px;padding:0 12px 12px}
+  .view-tab{height:46px;align-self:auto;font-size:13px}
+  .toolbar-status{font-size:10px;margin-left:auto;color:#8c99ad}
+  .search-wrap{order:3;width:100%;margin-left:0}
+  .search-wrap input{height:46px;font-size:16px;padding:10px 13px 10px 37px;border-radius:8px}
+  .search-wrap input::placeholder{font-size:13px}
+  .search-wrap>.icon{left:12px;width:17px;height:17px}
+  .search-wrap kbd{display:none}
+  .mobile-stages{position:relative;display:flex;align-items:center;gap:7px;overflow-x:auto;overscroll-behavior-x:contain;scrollbar-width:none;padding:11px 12px;border-bottom:1px solid var(--line);background:#fff}
+  .mobile-stages::-webkit-scrollbar{display:none}
+  .stage-tab{display:flex;flex:0 0 auto;align-items:center;justify-content:center;gap:7px;min-height:44px;max-width:280px;padding:10px 12px;border-radius:8px;border:1px solid #e5eaf2;background:#fff;color:#73819a;font-size:12px;font-weight:600}
+  .stage-tab>span:nth-child(2){max-width:190px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .stage-tab.is-active{background:var(--stage-soft);border-color:var(--stage);color:#3e567d}
+  .stage-tab-count{display:grid;place-items:center;min-width:19px;height:19px;background:#f0f3f8;border-radius:5px;padding:0 4px;font-size:10px}
+  .stage-tab.is-active .stage-tab-count{background:#fff;color:var(--stage)}
+  .board-scroll{scroll-snap-type:x mandatory;scroll-padding-inline:12px;overscroll-behavior-x:contain;scrollbar-width:none;touch-action:pan-x pan-y}
+  .board-scroll::-webkit-scrollbar{display:none}
+  .board{grid-auto-columns:calc(100% - 22px);padding:15px 12px 16px;gap:12px;min-height:350px;height:clamp(350px,58svh,570px);align-items:stretch}
+  .column{min-height:0;height:100%;scroll-snap-align:start}
+  .column-heading{padding:13px 5px;flex-shrink:0}
+  .column-heading h2{font-size:14px}
+  .column-count{font-size:11px;min-width:23px;height:22px}
+  .column-order{font-size:10px}
+  .column-body{min-height:0;overflow-y:auto;overscroll-behavior-y:contain;scrollbar-width:thin;scrollbar-color:#d8e0ec transparent;padding:1px 2px 14px;gap:13px;-webkit-overflow-scrolling:touch}
+  .lead-card{flex-shrink:0;padding:15px;border-radius:10px}
+  .card-top{margin-bottom:9px;min-height:38px}
+  .source-tag{font-size:10px;padding:5px 7px;gap:6px}
+  .source-tag .icon{width:15px;height:15px}
+  .test-badge{font-size:10px;padding:4px 6px}
+  .card-edit{width:44px;height:44px;flex-shrink:0;padding:12px;margin-top:-5px;margin-right:-7px;margin-bottom:-5px}
+  .card-edit .icon{width:18px;height:18px}
+  .card-title{font-size:18px;line-height:1.5;min-height:32px}
+  .card-company{font-size:13px;line-height:1.6;gap:7px;margin:5px 0 8px}
+  .card-company .icon{width:15px;height:15px}
+  .card-phone{font-size:14px;gap:8px;min-height:34px;margin:0 0 8px;color:#5f708b}
+  .card-phone .icon{width:15px;height:15px}
+  .card-phone a{display:flex;align-items:center;min-height:44px}
+  .card-service{font-size:12px;line-height:1.7;padding:10px 11px;margin-bottom:12px;color:#7e8ba1;-webkit-line-clamp:3}
+  .card-bottom{gap:9px;padding-top:11px}
+  .card-date{font-size:11px;gap:5px}
+  .card-date .icon{width:13px;height:13px}
+  .card-status{min-height:44px;font-size:16px;max-width:68%;min-width:0;padding:9px 25px 9px 10px;background-position:right 10px center;border-radius:7px}
+  .empty-column{min-height:174px;padding:22px 17px;gap:12px}
+  .empty-column>.icon{width:29px;height:29px}
+  .empty-column strong{font-size:13px}
+  .empty-column p{font-size:12px;max-width:210px;line-height:1.7}
+  .board-footer{padding:13px 12px;font-size:10px;line-height:1.7;align-items:flex-start;gap:10px}
+  .desktop-hint{display:none}
+  .mobile-hint{display:inline}
+  .source-note{font-size:10px;gap:5px;margin-top:17px;flex-wrap:wrap;line-height:1.6}
+  .source-note .icon{width:17px;height:17px}
+  .notice{padding:12px;font-size:12px;gap:8px;flex-wrap:wrap}
+  .notice>span{min-width:calc(100% - 30px)}
+  .notice .text-button{margin-left:23px;min-height:44px;font-size:12px}
+  .lead-dialog{position:fixed;inset:auto 0 auto 0;top:var(--viewport-top,0px);width:100%;max-width:none;height:var(--viewport-height,100dvh);max-height:none;margin:0;border-radius:0;border:0}
+  .lead-dialog form{height:100%;max-height:100%;min-height:0}
+  .dialog-header{padding:calc(15px + env(safe-area-inset-top)) max(16px,env(safe-area-inset-right)) 15px max(16px,env(safe-area-inset-left));gap:12px;align-items:center;background:white}
+  .dialog-header .eyebrow{font-size:9px;margin-bottom:7px}
+  .dialog-header h2{font-size:21px;line-height:1.4}
+  .icon-button{width:44px;height:44px;flex-shrink:0;border-radius:9px}
+  .icon-button .icon{width:21px;height:21px}
+  .dialog-body{flex:1;min-height:0;padding:20px max(16px,env(safe-area-inset-right)) 25px max(16px,env(safe-area-inset-left));overflow-y:auto;-webkit-overflow-scrolling:touch}
+  .detail-id{font-size:11px;line-height:1.8;margin-bottom:21px}
+  .field{margin-bottom:21px}
+  .field label{font-size:13px;margin-bottom:9px}
+  .field input,.field select,.field textarea{font-size:16px;min-height:48px;line-height:1.6;padding:11px 12px;border-radius:9px}
+  .field textarea{min-height:106px}
+  .field-help{font-size:11px;line-height:1.7}
+  .status-select-wrap select{padding-left:34px}
+  .status-indicator{top:22px;left:14px}
+  .metadata{font-size:13px;padding-top:19px}
+  .metadata summary{min-height:44px;line-height:1.7}
+  .metadata dl{grid-template-columns:minmax(78px,105px) minmax(0,1fr);font-size:12px;gap:14px 10px;margin-top:12px}
+  .dialog-footer{display:grid;grid-template-columns:46px minmax(0,1fr);padding:12px max(16px,env(safe-area-inset-right)) calc(12px + env(safe-area-inset-bottom)) max(16px,env(safe-area-inset-left));gap:10px;box-shadow:0 -4px 15px #24395105;background:#fff}
+  .dialog-footer-actions{display:grid;grid-template-columns:1fr 1fr;gap:9px;min-width:0}
+  .dialog-footer .button{min-height:46px;padding:10px 8px;font-size:14px;min-width:0;gap:5px}
+  .dialog-footer .button-danger-subtle{padding:11px;background:#fff2f3;border:1px solid #f7e0e3;color:#d46c79}
+  .dialog-footer .button-danger-subtle>span{display:none}
+  .dialog-footer .button-danger-subtle .icon{width:20px;height:20px}
+  .delete-dialog{width:410px;max-width:calc(100vw - 28px);max-height:calc(var(--viewport-height,100dvh) - 28px);padding:25px 22px;border-radius:15px}
+  .delete-dialog h2{font-size:21px}
+  .delete-dialog p{font-size:14px;line-height:1.8}
+  .delete-dialog .delete-warning{font-size:12px}
+  .delete-actions{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:23px}
+  .delete-actions .button{font-size:13px;padding:10px 7px;min-width:0}
+  .form-error{font-size:13px;line-height:1.7}
+  .toast-container{bottom:max(16px,env(safe-area-inset-bottom));right:12px;left:12px;max-width:none}
+  .toast{font-size:13px;padding:13px 15px}
+}
+@media(max-width:360px){
+  .topbar{padding-left:13px;padding-right:13px}
+  .connection{font-size:9px}
+  .topbar-right{gap:8px}
+  .profile{display:none}
+  main{padding-left:10px;padding-right:10px}
+  .heading-actions{gap:8px}
+  .heading-actions .button{font-size:12px;padding:10px 8px}
+  .sheet-link .small{display:none}
+  .card-status{font-size:16px;max-width:71%;padding-left:8px;padding-right:23px}
+  .card-bottom{gap:5px}
+  .card-date{font-size:10px}
+  .card-date .icon{display:none}
+  .dialog-footer{gap:8px;padding-left:12px;padding-right:12px}
+  .dialog-footer-actions{gap:7px}
+  .dialog-footer .button{font-size:13px}
+  .delete-dialog{padding:24px 18px}
+}
+@media(hover:none){.lead-card:hover{border-color:#e0e6ef;box-shadow:0 2px 3px #263b5704}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+
+</style>
+</head>
+<body>
+  <svg class="icon-defs" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+    <symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.7"/><rect x="14" y="3" width="7" height="7" rx="1.7"/><rect x="3" y="14" width="7" height="7" rx="1.7"/><rect x="14" y="14" width="7" height="7" rx="1.7"/></symbol>
+    <symbol id="i-board" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M9 4v16M15 4v16M5.5 8h1M11.5 8h1M17.5 8h1"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="m9 5 7 7-7 7"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 4.5 4.5"/></symbol>
+    <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M20 8A8.3 8.3 0 0 0 5.7 5.7L3 8m0-5v5h5M4 16a8.3 8.3 0 0 0 14.3 2.3L21 16m0 5v-5h-5"/></symbol>
+    <symbol id="i-sheet" viewBox="0 0 24 24"><path d="M13 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V10zM13 3v7h7"/><path d="M8 14h8M8 17h8M11 12v7"/></symbol>
+    <symbol id="i-external" viewBox="0 0 24 24"><path d="M14 4h6v6M20 4 10 14M10 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-4"/></symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24"><path d="m7 3 3 5-3 3c2 3 3 4 6 6l3-3 5 3c-1 4-3 5-6 4C8 19 5 16 3 9 2 6 3 4 7 3Z"/></symbol>
+    <symbol id="i-company" viewBox="0 0 24 24"><path d="M4 21V5a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v16M17 10h3v11M2 21h20M8 7h1m3 0h1m-5 4h1m3 0h1m-5 4h1m3 0h1M9 21v-3h3v3"/></symbol>
+    <symbol id="i-time" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+    <symbol id="i-edit" viewBox="0 0 24 24"><path d="m15 4 5 5M4 20l5-1L20 8a3.5 3.5 0 0 0-5-5L4 14z"/></symbol>
+    <symbol id="i-trash" viewBox="0 0 24 24"><path d="M3 6h18M9 6V3h6v3M5 6l1 15h12l1-15M10 10v7m4-7v7"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></symbol>
+    <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v6m0-10v.2"/></symbol>
+    <symbol id="i-inbox" viewBox="0 0 24 24"><path d="m3 14 3-9h12l3 9v5H3zM3 14h5l2 3h4l2-3h5"/></symbol>
+    <symbol id="i-meta" viewBox="0 0 24 24"><path d="M12 10c-3-6-6-6-8-1-3 8 0 12 3 8l9-11c3-3 7 6 4 12-2 4-5-2-8-8Z"/></symbol>
+    <symbol id="i-drag" viewBox="0 0 24 24"><path d="M9 5h.01M15 5h.01M9 12h.01M15 12h.01M9 19h.01M15 19h.01" stroke-width="3.5"/></symbol>
+  </svg>
+
+  <aside class="sidebar" aria-label="Asosiy menyu">
+    <a class="logo" href="./" aria-label="Leadlar bosh sahifa">L<span>.</span></a>
+    <div class="sidebar-divider"></div>
+    <a class="side-item active" href="#main" aria-label="Leadlar" aria-current="page"><svg class="icon"><use href="#i-board"/></svg><span>Leadlar</span></a>
+    <div class="sidebar-bottom"><span class="workspace-avatar" title="Mening ish maydonim">M</span><span class="workspace-label">Mening<br>CRM’im</span></div>
+  </aside>
+
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="breadcrumb"><span class="mobile-brand" aria-hidden="true">L<span>.</span></span><svg class="icon"><use href="#i-grid"/></svg><span>Ish maydoni</span><svg class="icon crumb-arrow"><use href="#i-arrow"/></svg><strong>Leadlar</strong></div>
+      <div class="topbar-right"><span class="connection" id="connection"><span class="connection-dot"></span><span id="connectionText">Ulanmoqda</span></span><span class="topbar-divider"></span><span class="profile" title="Mening CRM’im">M</span></div>
+    </header>
+
+    <main id="main">
+      <section class="page-heading">
+        <div><div class="eyebrow"><span class="eyebrow-dot"></span> SOTUV VORONKASI</div><div class="title-row"><h1>Leadlar</h1><span class="total-badge" id="totalCount">—</span></div><p class="page-description">Barcha murojaatlar, bitta joyda.</p></div>
+        <div class="heading-actions"><a class="button button-white sheet-link" id="sheetLink" target="_blank" rel="noopener noreferrer"><svg class="icon sheet-icon"><use href="#i-sheet"/></svg>Google Sheets<svg class="icon small"><use href="#i-external"/></svg></a><button class="button button-primary" id="refreshButton" type="button"><svg class="icon" id="refreshIcon"><use href="#i-refresh"/></svg><span id="refreshLabel">Yangilash</span></button></div>
+      </section>
+
+      <section class="workspace-panel" aria-label="Leadlarni boshqarish">
+        <div class="toolbar">
+          <div class="view-tab"><svg class="icon"><use href="#i-board"/></svg>Kanban<span class="view-tab-dot"></span></div>
+          <div class="search-wrap"><svg class="icon"><use href="#i-search"/></svg><input id="searchInput" type="search" placeholder="Ism, telefon yoki kompaniya…" aria-label="Leadlarni qidirish" autocomplete="off"><kbd>/</kbd></div>
+          <span class="toolbar-status" id="syncTime">Ma’lumotlar yuklanmoqda…</span>
+        </div>
+        <div class="notice" id="notice" role="alert" hidden><svg class="icon"><use href="#i-info"/></svg><span id="noticeText"></span><button id="retryButton" class="text-button" type="button">Qayta urinish</button></div>
+        <nav class="mobile-stages" id="mobileStages" aria-label="Lead statuslari"></nav>
+        <div class="board-scroll" id="boardScroll" tabindex="0" aria-label="Status ustunlari. Yon tomonga aylantirish mumkin."><div class="board" id="board" aria-busy="true"></div></div>
+        <div class="board-footer"><span><svg class="icon"><use href="#i-info"/></svg><span class="desktop-hint">Statusni o‘zgartirish uchun kartochkani boshqa ustunga sudrang.</span><span class="mobile-hint">Ustunlarni suring yoki yuqoridan statusni tanlang.</span></span><span id="resultCount">—</span></div>
+      </section>
+      <div class="source-note"><span class="meta-mark"><svg class="icon"><use href="#i-meta"/></svg></span>Meta Ads<span class="source-dot">·</span>Google Sheets orqali ulangan</div>
+    </main>
+  </div>
+
+  <dialog class="lead-dialog" id="leadDialog" aria-labelledby="detailTitle" closedby="none">
+    <form id="editForm">
+      <div class="dialog-header"><div><p class="eyebrow">LEAD KARTOCHKASI</p><h2 id="detailTitle">Leadni tahrirlash</h2></div><button class="icon-button close-dialog" id="closeDetail" type="button" aria-label="Yopish"><svg class="icon"><use href="#i-close"/></svg></button></div>
+      <div class="dialog-body"><div class="detail-id" id="detailId"></div><div class="field"><label for="detailStatus">Status</label><div class="status-select-wrap"><span class="status-indicator" id="detailStatusDot"></span><select id="detailStatus" name="lead_status"></select></div></div><div class="edit-fields" id="editFields"></div><details class="metadata"><summary>Reklama va texnik ma’lumotlar</summary><dl id="metadataFields"></dl></details><p class="form-error" id="formError" role="alert" hidden></p></div>
+      <div class="dialog-footer"><button class="button button-danger-subtle" id="deleteFromDetail" type="button" aria-label="Leadni o‘chirish" title="Leadni o‘chirish"><svg class="icon"><use href="#i-trash"/></svg><span>O‘chirish</span></button><div class="dialog-footer-actions"><button class="button button-white" id="cancelDetail" type="button">Bekor qilish</button><button class="button button-primary" id="saveButton" type="submit"><svg class="icon"><use href="#i-check"/></svg><span id="saveLabel">Saqlash</span></button></div></div>
+    </form>
+  </dialog>
+
+  <dialog class="delete-dialog" id="deleteDialog" aria-labelledby="deleteTitle" aria-describedby="deleteDescription" closedby="none"><div class="delete-icon"><svg class="icon"><use href="#i-trash"/></svg></div><h2 id="deleteTitle">Lead o‘chirilsinmi?</h2><p id="deleteDescription"><strong id="deleteName"></strong> Google Sheets’dan ham o‘chiriladi.</p><p class="delete-warning">Bu amalni sayt ichida ortga qaytarib bo‘lmaydi.</p><p class="form-error" id="deleteError" role="alert" hidden></p><div class="delete-actions"><button type="button" class="button button-white" id="cancelDelete" autofocus>Bekor qilish</button><button type="button" class="button button-danger" id="confirmDelete">Ha, o‘chirish</button></div></dialog>
+  <div class="toast-container" id="toasts" aria-live="polite" aria-atomic="true"></div>
+<script>
+/* Ulanish va ustunlar shu faylda sozlanadi. Qo‘shimcha kutubxona kerak emas. */
+window.CRM_CONFIG = Object.freeze({
+  apiUrl: "https://sheetdb.io/api/v1/4mk1o9ucqmov5",
+  sheetUrl: "https://docs.google.com/spreadsheets/d/16CT17VcyKwwHy1nBDhvP_LVZyy7SRh0giKyzmmLxSIQ/edit",
+  idField: "id",
+  statusField: "lead_status",
+  statuses: [
+    { value: "CREAT", label: "Yangi", tone: "blue", aliases: ["", "NEW", "CREATED", "YANGI", "НОВЫЙ"] },
+    { value: "CONTACTED", label: "Bog‘lanildi", tone: "cyan", aliases: ["CONTACT", "BOG‘LANILDI", "BOG'LANILDI"] },
+    { value: "IN_PROGRESS", label: "Jarayonda", tone: "amber", aliases: ["IN PROGRESS", "JARAYONDA", "В РАБОТЕ"] },
+    { value: "WON", label: "Muvaffaqiyatli", tone: "green", aliases: ["SUCCESS", "CLOSED_WON", "SOTILDI"] },
+    { value: "LOST", label: "Bekor qilindi", tone: "slate", aliases: ["CLOSED_LOST", "CANCELLED", "CANCELED", "BEKOR"] }
+  ]
+});
+
+</script>
+<script>
+(function (root, factory) {
+  "use strict";
+  const api = factory();
+  if (typeof module === "object" && module.exports) module.exports = api;
+  else root.LeadCRM = api;
+})(typeof window !== "undefined" ? window : globalThis, function () {
+  "use strict";
+  const FIELD_KEYS = {
+    name: ["ismingiz?", "full_name", "name", "ism", "имя", "first_name"],
+    company: ["kompaniyangiz_nomi?", "company_name", "company", "kompaniya"],
+    phone: ["telefon_raqamingiz?", "phone_number", "phone", "номер_телефона", "telefon"],
+    service: ["sizga_aynan_qanday_xizmatlar_kerak_bo'ladi?", "service", "xizmat", "message"]
+  };
+  const META_KEYS = new Set(["id", "lead_id", "created_time", "created_at", "ad_id", "ad_name", "adset_id", "adset_name", "campaign_id", "campaign_name", "form_id", "form_name", "is_organic", "platform"]);
+  const META_LABELS = {id:"Lead ID",created_time:"Kelgan vaqti",created_at:"Kelgan vaqti",ad_id:"Reklama ID",ad_name:"Reklama",adset_id:"Reklama guruhi ID",adset_name:"Reklama guruhi",campaign_id:"Kampaniya ID",campaign_name:"Kampaniya",form_id:"Forma ID",form_name:"Forma",is_organic:"Organik lead",platform:"Platforma",lead_id:"Lead ID"};
+  const string = value => value == null ? "" : String(value);
+  const isPlaceholder = value => /<test lead:\s*dummy data/i.test(string(value));
+  function fieldKey(row, type) {
+    const keys = Object.keys(row);
+    const matches = (FIELD_KEYS[type] || []).map(alias => keys.find(k => k.toLowerCase() === alias.toLowerCase())).filter(Boolean);
+    return matches.find(k => string(row[k]).trim() && !isPlaceholder(row[k])) || matches[0] || null;
+  }
+  function value(row, type) { const key = fieldKey(row, type); return key ? string(row[key]) : ""; }
+  function display(value, fallback) { return !string(value).trim() || isPlaceholder(value) ? fallback : string(value); }
+  function name(row) { return display(value(row,"name"), isPlaceholder(value(row,"name")) ? "Test lead" : "Ismsiz lead"); }
+  function statusOf(row, config) {
+    const raw = string(row[config.statusField]);
+    const normalized = raw.trim().toUpperCase();
+    const known = config.statuses.find(s => [s.value,...(s.aliases || [])].some(v => string(v).toUpperCase() === normalized));
+    return known ? known.value : raw;
+  }
+  function statuses(rows, config) {
+    const list = config.statuses.map(s => ({...s}));
+    const seen = new Set(list.map(s => s.value));
+    for (const row of rows) {
+      const key = statusOf(row,config);
+      if (!seen.has(key)) { list.push({value:key,label:key,tone:"slate"}); seen.add(key); }
+    }
+    return list;
+  }
+  function fieldLabel(key) {
+    if (key.toLowerCase() === "номер_телефона") return "Telefon raqami (Meta)";
+    for (const [type,aliases] of Object.entries(FIELD_KEYS)) if (aliases.some(a=>a.toLowerCase() === key.toLowerCase())) return {name:"Ism va familiya",company:"Kompaniya",phone:"Telefon raqami",service:"Kerakli xizmat"}[type];
+    return META_LABELS[key.toLowerCase()] || key.replace(/_/g," ");
+  }
+  function editableKeys(row, config) {
+    const primary = Object.keys(FIELD_KEYS).map(type => fieldKey(row,type)).filter(Boolean);
+    const rest = Object.keys(row).filter(key => !primary.includes(key) && key !== config.statusField && key !== config.idField && !META_KEYS.has(key.toLowerCase()));
+    return [...primary,...rest];
+  }
+  function safeIdentity(row, rows, config) {
+    const id = string(row[config.idField]);
+    if (!id.trim()) throw new Error("Bu leadda ID yo‘q. Jadvaldagi id ustunini to‘ldiring.");
+    // SheetDB interprets these characters as search operators even when URL encoded.
+    if (/[*!<>\r\n]/.test(id) || id.startsWith("=")) throw new Error("Lead ID’sida qidiruv belgisi bor. Bu leadni xavfsiz o‘zgartirib bo‘lmaydi.");
+    if (rows.filter(item => string(item[config.idField]) === id).length !== 1) throw new Error("Bu ID takrorlangan. Avval Google Sheets’da har bir leadga alohida ID bering.");
+    return id;
+  }
+  function matches(row, query) {
+    const words = string(query).trim().toLocaleLowerCase().split(/\s+/).filter(Boolean);
+    if (!words.length) return true;
+    const text = Object.values(row).map(string).join(" ").toLocaleLowerCase();
+    const digits = text.replace(/\D/g, "");
+    return words.every(word => text.includes(word) || (/^\+?[\d()-]+$/.test(word) && word.replace(/\D/g, "").length > 2 && digits.includes(word.replace(/\D/g, ""))));
+  }
+  class SheetClient {
+    constructor(config, fetcher) {
+      this.config = config;
+      this.fetcher = fetcher || ((...args) => fetch(...args));
+    }
+    async request(url, options = {}) {
+      const controller = new AbortController();
+      const timer = setTimeout(()=>controller.abort(),25000);
+      const writing = options.method && options.method !== "GET";
+      try {
+        const response = await this.fetcher(url,{...options,signal:controller.signal,cache:"no-store",credentials:"omit"});
+        let result;
+        try { result = await response.json(); } catch (_) { throw new Error("Serverdan noto‘g‘ri javob keldi. Yangilashni bosing."); }
+        if (!response.ok) {
+          if (response.status===401 || response.status===403) throw new Error("SheetDB ruxsati yetarli emas. API sozlamalaridagi READ, UPDATE va DELETE ruxsatlarini tekshiring.");
+          if (response.status===429 || response.status===402) throw new Error("SheetDB so‘rov limiti tugagan. Biroz kuting yoki SheetDB tarifini tekshiring.");
+          if (response.status===404) throw new Error("Lead yoki API topilmadi. Yangilashni bosing.");
+          throw new Error("SheetDB xatosi ("+response.status+"). Keyinroq qayta urinib ko‘ring.");
+        }
+        if (result && !Array.isArray(result) && result.error) throw new Error("SheetDB so‘rovni bajarmadi. API sozlamalarini tekshiring.");
+        return result;
+      } catch (error) {
+        if (error.name === "AbortError" || error instanceof TypeError) throw new Error(writing ? "Saqlash natijasini tekshirib bo‘lmadi. Qayta amal qilishdan oldin oynani yoping va Yangilashni bosing." : "Ulanib bo‘lmadi. Internetni va SheetDB CORS sozlamalarini tekshirib, qayta urinib ko‘ring.");
+        throw error;
+      } finally { clearTimeout(timer); }
+    }
+    async read() {
+      const url = new URL(this.config.apiUrl);
+      url.searchParams.set("ignore_cache","1");
+      const rows = await this.request(url.href);
+      if (!Array.isArray(rows) || rows.some(row => !row || typeof row!=="object" || Array.isArray(row) || Object.values(row).some(v=>v!==null && typeof v === "object"))) throw new Error("API jadval qatorlarini qaytarmadi. SheetDB manzilini tekshiring.");
+      return rows.filter(row => Object.values(row).some(v=>string(v).trim()));
+    }
+    mutationUrl(row, rows) {
+      const id = safeIdentity(row,rows,this.config);
+      const url = new URL(this.config.apiUrl.replace(/\/$/,"")+"/"+encodeURIComponent(this.config.idField)+"/"+encodeURIComponent(id));
+      url.searchParams.set("casesensitive","true");
+      return url;
+    }
+    async update(row, changes, rows) {
+      const url = this.mutationUrl(row,rows);
+      const keys = Object.keys(changes);
+      if (keys.includes(this.config.idField) || keys.some(key=>!Object.prototype.hasOwnProperty.call(row,key))) throw new Error("Faqat jadvaldagi mavjud maydonlarni o‘zgartirish mumkin. ID o‘zgarmaydi.");
+      if (!keys.length) return row;
+      url.searchParams.set("mode","RAW");
+      const result = await this.request(url.href,{method:"PATCH",headers:{"Content-Type":"application/json"},body:JSON.stringify({data:changes})});
+      if (Number(result.updated)!==1) throw new Error("Saqlash tasdiqlanmadi. Qayta amal qilishdan oldin Yangilashni bosing.");
+      return {...row,...changes};
+    }
+    async remove(row, rows) {
+      const url = this.mutationUrl(row,rows);
+      url.searchParams.set("limit","1");
+      const result = await this.request(url.href,{method:"DELETE"});
+      if (Number(result.deleted)!==1) throw new Error("O‘chirish tasdiqlanmadi. Qayta amal qilishdan oldin Yangilashni bosing.");
+      return true;
+    }
+  }
+  return {string,isPlaceholder,fieldKey,value,display,name,statusOf,statuses,fieldLabel,editableKeys,safeIdentity,matches,SheetClient};
+});
+
+</script>
+<script>
+(function () {
+  "use strict";
+  const C = window.LeadCRM;
+  const config = window.CRM_CONFIG;
+  const client = new C.SheetClient(config);
+  const $ = id => document.getElementById(id);
+  const state = { rows: [], loaded: false, loading: false, busy: false, selected: null, pendingDelete: null, query: "", dragIndex: null, lastSync: null, activeStage: config.statuses[0].value };
+  const mobileLayout = window.matchMedia("(max-width: 720px), (max-width: 1000px) and (max-height: 500px)");
+  const touchInput = window.matchMedia("(pointer: coarse)");
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+  const editInputs = new Map();
+  let toastTimer;
+
+  function el(tag, className, text) {
+    const node = document.createElement(tag);
+    if (className) node.className = className;
+    if (text !== undefined) node.textContent = text;
+    return node;
+  }
+  function icon(name) {
+    const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    svg.setAttribute("class", "icon");
+    svg.setAttribute("aria-hidden", "true");
+    const use = document.createElementNS("http://www.w3.org/2000/svg", "use");
+    use.setAttribute("href", "#i-" + name);
+    svg.append(use);
+    return svg;
+  }
+  function setConnection(kind, text) {
+    $("connection").className = "connection " + kind;
+    $("connectionText").textContent = text;
+  }
+  function showNotice(message) {
+    $("noticeText").textContent = message;
+    $("notice").hidden = !message;
+  }
+  function toast(message, error = false) {
+    clearTimeout(toastTimer);
+    const node = el("div", "toast" + (error ? " error" : ""));
+    node.append(icon(error ? "info" : "check"), el("span", "", message));
+    $("toasts").replaceChildren(node);
+    toastTimer = setTimeout(() => $("toasts").replaceChildren(), error ? 9000 : 4200);
+  }
+  function controls() {
+    $("refreshButton").disabled = state.loading || state.busy;
+    $("retryButton").disabled = state.loading || state.busy;
+    $("refreshIcon").classList.toggle("spin", state.loading);
+    $("refreshLabel").textContent = state.loading ? "Yuklanmoqda…" : "Yangilash";
+    $("board").setAttribute("aria-busy", String(state.loading || state.busy));
+    for (const id of ["closeDetail", "cancelDetail", "saveButton", "deleteFromDetail", "detailStatus", "cancelDelete", "confirmDelete"]) $(id).disabled = state.busy;
+    for (const input of editInputs.values()) input.disabled = state.busy;
+    $("saveLabel").textContent = state.busy ? "Saqlanmoqda…" : "Saqlash";
+    $("confirmDelete").textContent = state.busy ? "O‘chirilmoqda…" : "Ha, o‘chirish";
+    $("totalCount").textContent = state.loaded ? state.rows.length : "—";
+    $("syncTime").textContent = state.busy ? "O‘zgarish saqlanmoqda…" : state.loading ? "Ma’lumotlar yuklanmoqda…" : state.lastSync ? "Yangilandi: " + new Intl.DateTimeFormat("uz-UZ", {hour:"2-digit",minute:"2-digit",timeZone:"Asia/Tashkent"}).format(state.lastSync) : "Hali yangilanmagan";
+    document.querySelectorAll(".card-status,.card-edit,.card-title").forEach(node => { node.disabled = state.busy || state.loading; });
+    document.querySelectorAll(".lead-card").forEach(node => {
+      node.classList.toggle("busy", state.busy);
+      node.draggable = !(state.busy || state.loading || mobileLayout.matches || touchInput.matches) && node.dataset.mutable === "true";
+      node.setAttribute("aria-disabled",String(state.busy || state.loading));
+    });
+  }
+  function dateText(row) {
+    const raw = row.created_time || row.created_at;
+    const date = new Date(raw);
+    if (!raw || Number.isNaN(date.getTime())) return {short:"Sana yo‘q",long:"Kelgan vaqti ko‘rsatilmagan"};
+    const parts=Object.fromEntries(new Intl.DateTimeFormat("en-GB",{year:"numeric",month:"2-digit",day:"2-digit",hour:"2-digit",minute:"2-digit",hourCycle:"h23",timeZone:"Asia/Tashkent"}).formatToParts(date).map(part=>[part.type,part.value]));
+    const months=["yan","fev","mar","apr","may","iyun","iyul","avg","sen","okt","noy","dek"];
+    const month=months[Number(parts.month)-1];
+    return {short:parts.day+" "+month,long:parts.day+" "+month+" "+parts.year+", "+parts.hour+":"+parts.minute};
+  }
+  function statusOptions(select, selected) {
+    select.replaceChildren();
+    for (const stage of C.statuses(state.rows,config)) {
+      const option = el("option", "", stage.label);
+      option.value = stage.value;
+      option.selected = selected === stage.value;
+      select.append(option);
+    }
+  }
+  function makeCard(row, index, stage) {
+    const card = el("article", "lead-card tone-" + stage.tone);
+    card.dataset.index = index;
+    card.setAttribute("aria-label", C.name(row)+" — lead kartochkasi");
+    card.setAttribute("aria-haspopup", "dialog");
+    card.tabIndex = 0;
+    let identityError = "";
+    try { C.safeIdentity(row,state.rows,config); } catch (error) { identityError = error.message; }
+    card.dataset.mutable = String(!identityError);
+    card.draggable = !identityError && !mobileLayout.matches && !touchInput.matches;
+    if (identityError) card.title = identityError;
+
+    const top = el("div","card-top");
+    const source = el("span","source-tag");
+    source.append(icon("meta"),el("span","","Meta Ads"));
+    top.append(source);
+    if (Object.values(row).some(C.isPlaceholder)) top.append(el("span","test-badge","Test"));
+    const edit = el("button","card-edit");
+    edit.type = "button";
+    edit.title = "Leadni tahrirlash";
+    edit.setAttribute("aria-label", C.name(row) + " — tahrirlash");
+    edit.append(icon("edit"));
+    edit.addEventListener("click",()=>openDetail(row));
+    top.append(edit);
+
+    const title = el("button","card-title",C.name(row));
+    title.type="button";
+    title.addEventListener("click",()=>openDetail(row));
+    const company = el("p","card-company");
+    company.append(icon("company"),el("span","",C.display(C.value(row,"company"),C.isPlaceholder(C.value(row,"company")) ? "Sinov kompaniyasi" : "Kompaniya ko‘rsatilmagan")));
+    const phone = el("div","card-phone");
+    phone.append(icon("phone"));
+    const phoneRaw = C.value(row,"phone").replace(/^p:/,"").trim();
+    const phoneText = C.display(phoneRaw,"Telefon ko‘rsatilmagan");
+    if (/^\+?[\d\s()-]{7,25}$/.test(phoneRaw)) {
+      const link = el("a","",phoneText);
+      link.href = "tel:" + phoneRaw.replace(/[^+\d]/g,"");
+      link.draggable = false;
+      phone.append(link);
+    } else phone.append(el("span","",phoneText));
+    const service = el("p","card-service",C.display(C.value(row,"service"),C.isPlaceholder(C.value(row,"service")) ? "Bu Meta Ads’dan kelgan test murojaati." : "Xizmat turi ko‘rsatilmagan"));
+    service.title = service.textContent;
+    const bottom = el("div","card-bottom");
+    const date = dateText(row);
+    const dateNode = el("time","card-date");
+    dateNode.title=date.long;
+    if (row.created_time || row.created_at) dateNode.dateTime=C.string(row.created_time || row.created_at);
+    dateNode.append(icon("time"),el("span","",date.short));
+    const select = el("select","card-status");
+    select.setAttribute("aria-label",C.name(row)+" — status");
+    statusOptions(select,C.statusOf(row,config));
+    select.addEventListener("change",()=>changeStatus(row,select.value));
+    bottom.append(dateNode,select);
+    card.append(top,title,company,phone,service,bottom);
+
+    let interactiveStart = false;
+    let moved = false;
+    let pointerStart = null;
+    card.addEventListener("pointerdown",event=> {
+      interactiveStart=!!event.target.closest("button,select,a,input,textarea");
+      pointerStart={x:event.clientX,y:event.clientY};
+      moved=false;
+    });
+    card.addEventListener("pointermove",event=> {
+      if (pointerStart && Math.hypot(event.clientX-pointerStart.x,event.clientY-pointerStart.y)>10) moved=true;
+    });
+    card.addEventListener("pointercancel",()=> { moved=true;pointerStart=null; });
+    card.addEventListener("click",event=> {
+      if (moved || event.target.closest("button,select,a,input,textarea,label,option")) return;
+      openDetail(row);
+    });
+    card.addEventListener("keydown",event=> {
+      if (event.target===card && (event.key==="Enter" || event.key===" ")) { event.preventDefault();openDetail(row); }
+    });
+    card.addEventListener("dragstart",event=> {
+      if (interactiveStart || state.busy || state.loading || identityError || mobileLayout.matches || touchInput.matches) { event.preventDefault(); return; }
+      moved=true;
+      state.dragIndex=index;
+      event.dataTransfer.effectAllowed="move";
+      event.dataTransfer.setData("text/plain",String(index));
+      card.classList.add("dragging");
+    });
+    card.addEventListener("dragend",clearDrag);
+    return card;
+  }
+  function clearDrag() {
+    state.dragIndex=null;
+    document.querySelectorAll(".dragging,.drag-over").forEach(node=>node.classList.remove("dragging","drag-over"));
+  }
+  function markActiveStage() {
+    for (const button of $("mobileStages").querySelectorAll("button")) {
+      const active=button.dataset.status===state.activeStage;
+      button.classList.toggle("is-active",active);
+      button.setAttribute("aria-pressed",String(active));
+      if (active && mobileLayout.matches) {
+        const nav=$("mobileStages");
+        nav.scrollLeft=Math.max(0,button.offsetLeft-(nav.clientWidth-button.offsetWidth)/2);
+      }
+    }
+  }
+  function selectStage(value,smooth=false) {
+    const columns=Array.from($("board").children);
+    const column=columns.find(node=>node.dataset.status===value);
+    if (!column) return;
+    state.activeStage=value;
+    markActiveStage();
+    if (mobileLayout.matches) $("boardScroll").scrollTo({left:column.offsetLeft-columns[0].offsetLeft,behavior:smooth && !reducedMotion.matches ? "smooth" : "instant"});
+  }
+  function renderStageNav(stages,shown) {
+    const fragment=document.createDocumentFragment();
+    for (const stage of stages) {
+      const button=el("button","stage-tab tone-"+stage.tone);
+      button.type="button";
+      button.dataset.status=stage.value;
+      const count=shown.filter(row=>C.statusOf(row,config)===stage.value).length;
+      button.setAttribute("aria-label",stage.label+", "+count+" ta lead");
+      button.append(el("span","stage-dot"),el("span","",stage.label),el("span","stage-tab-count",state.loaded ? String(count) : "—"));
+      button.addEventListener("click",()=>selectStage(stage.value,true));
+      fragment.append(button);
+    }
+    $("mobileStages").replaceChildren(fragment);
+    markActiveStage();
+  }
+  function syncDialogLayout() {
+    document.documentElement.classList.toggle("modal-open",$("leadDialog").open || $("deleteDialog").open);
+  }
+  function updateViewport() {
+    document.documentElement.style.setProperty("--viewport-height",Math.round(window.visualViewport?.height || window.innerHeight)+"px");
+    document.documentElement.style.setProperty("--viewport-top",Math.round(window.visualViewport?.offsetTop || 0)+"px");
+  }
+  function renderBoard() {
+    const scrollLeft=$("boardScroll").scrollLeft;
+    const fragment=document.createDocumentFragment();
+    const stages=C.statuses(state.rows,config);
+    const shown=state.rows.filter(row=>C.matches(row,state.query));
+    stages.forEach((stage,order)=> {
+      const column=el("section","column tone-"+stage.tone);
+      column.dataset.status=stage.value;
+      const heading=el("header","column-heading");
+      const headingTitle=el("h2","",stage.label);
+      headingTitle.title=stage.label;
+      const group=shown.filter(row=>C.statusOf(row,config)===stage.value);
+      heading.append(el("span","stage-dot"),headingTitle,el("span","column-count",state.loaded ? String(group.length) : "—"),el("span","column-order",String(order+1).padStart(2,"0")));
+      const body=el("div","column-body");
+      if (!state.loaded && state.loading) {
+        const skeleton=el("div","skeleton-card");
+        skeleton.setAttribute("aria-hidden","true");
+        for(let i=0;i<4;i++) skeleton.append(el("div","skeleton-line"));
+        body.append(skeleton);
+      } else if (!group.length) {
+        const empty=el("div","empty-column");
+        empty.append(icon(stage.value==="WON" ? "check" : "inbox"),el("strong","",state.query ? "Mos lead topilmadi" : "Hozircha lead yo‘q"),el("p","",state.query ? "Boshqa ism yoki raqamni qidiring." : stage.value==="CREAT" ? "Yangi murojaatlar shu yerda ko‘rinadi." : "Lead shu statusga o‘tganda bu yerda ko‘rinadi."));
+        body.append(empty);
+      } else group.forEach(row=>body.append(makeCard(row,state.rows.indexOf(row),stage)));
+      column.append(heading,body);
+      column.addEventListener("dragover",event=> {
+        if (state.dragIndex===null || state.busy || state.loading) return;
+        event.preventDefault();event.dataTransfer.dropEffect="move";column.classList.add("drag-over");
+      });
+      column.addEventListener("dragleave",event=> { if (!column.contains(event.relatedTarget)) column.classList.remove("drag-over"); });
+      column.addEventListener("drop",event=> {
+        event.preventDefault();
+        const index=state.dragIndex;
+        clearDrag();
+        if (index===null || state.busy || state.loading || !state.rows[index]) return;
+        changeStatus(state.rows[index],stage.value);
+      });
+      fragment.append(column);
+    });
+    $("board").replaceChildren(fragment);
+    if (!stages.some(stage=>stage.value===state.activeStage)) state.activeStage=stages[0].value;
+    renderStageNav(stages,shown);
+    if (mobileLayout.matches) selectStage(state.activeStage);
+    else $("boardScroll").scrollLeft=scrollLeft;
+    $("resultCount").textContent=state.loaded ? (state.query ? shown.length+" / "+state.rows.length+" ta lead" : state.rows.length+" ta lead") : "—";
+    controls();
+  }
+  async function load(userInitiated=false) {
+    if (state.loading || state.busy) return;
+    state.loading=true;
+    showNotice("");
+    setConnection("","Ulanmoqda");
+    if (!state.loaded) renderBoard(); else controls();
+    try {
+      const rows=await client.read();
+      rows.sort((a,b)=>(Date.parse(b.created_time || b.created_at)||0)-(Date.parse(a.created_time || a.created_at)||0));
+      state.rows=rows;state.loaded=true;state.lastSync=new Date();
+      setConnection("connected","Google Sheets ulangan");
+      if (rows.some(row=>!Object.prototype.hasOwnProperty.call(row,config.statusField))) showNotice("Ayrim qatorlarda lead_status ustuni yo‘q. Google Sheets’ning birinchi qatoridagi ustun nomlarini tekshiring.");
+      if (userInitiated) toast("Yangilandi. Jami "+rows.length+" ta lead.");
+    } catch(error) {
+      setConnection("error","Ulanishda xato");
+      showNotice(error.message+(state.loaded ? " Ekranda oldin yuklangan ma’lumotlar turibdi." : ""));
+    } finally { state.loading=false;renderBoard(); }
+  }
+  async function changeStatus(row,value) {
+    if (state.busy || state.loading) return;
+    if (C.statusOf(row,config)===value) return;
+    state.busy=true;controls();
+    try {
+      const updated=await client.update(row,{[config.statusField]:value},state.rows);
+      state.rows[state.rows.indexOf(row)]=updated;
+      state.activeStage=value;
+      state.lastSync=new Date();
+      setConnection("connected","Google Sheets ulangan");
+      const stage=C.statuses(state.rows,config).find(s=>s.value===value);
+      toast("Lead «"+(stage?.label || value)+"» ustuniga o‘tdi.");
+    } catch(error) { toast(error.message,true); }
+    finally { state.busy=false;renderBoard(); }
+  }
+  function updateDetailTone() {
+    const stage=C.statuses(state.rows,config).find(s=>s.value===$("detailStatus").value);
+    $("detailStatusDot").className="status-indicator tone-"+(stage?.tone || "slate");
+  }
+  function openDetail(row) {
+    if (state.busy || state.loading || $("leadDialog").open) return;
+    state.selected=row;
+    $("detailTitle").textContent=C.name(row);
+    $("detailId").textContent="ID: "+(C.string(row[config.idField]) || "Ko‘rsatilmagan")+"   ·   "+dateText(row).long;
+    $("formError").hidden=true;
+    statusOptions($("detailStatus"),C.statusOf(row,config));
+    updateDetailTone();
+    $("editFields").replaceChildren();editInputs.clear();
+    C.editableKeys(row,config).forEach((key,index)=> {
+      const field=el("div","field");
+      const label=el("label","",C.fieldLabel(key));
+      const isLong=key===C.fieldKey(row,"service") || C.string(row[key]).length>100;
+      const input=el(isLong ? "textarea" : "input","");
+      input.id="lead-field-"+index;
+      input.name=key;
+      if (!isLong) input.type="text";
+      if (key===C.fieldKey(row,"phone")) { input.inputMode="tel";input.autocomplete="tel"; }
+      else if (key===C.fieldKey(row,"name")) input.autocomplete="name";
+      else if (key===C.fieldKey(row,"company")) input.autocomplete="organization";
+      label.htmlFor=input.id;
+      input.value=C.string(row[key]);
+      field.append(label,input);
+      if (C.isPlaceholder(row[key])) field.append(el("p","field-help","Meta Ads yaratgan test qiymati."));
+      editInputs.set(key,input);
+      $("editFields").append(field);
+    });
+    const editable=new Set(editInputs.keys());
+    const metadata=$("metadataFields");metadata.replaceChildren();
+    for (const [key,value] of Object.entries(row)) {
+      if (editable.has(key) || key===config.statusField) continue;
+      metadata.append(el("dt","",C.fieldLabel(key)),el("dd","",C.string(value) || "—"));
+    }
+    document.querySelector(".metadata").open=false;
+    controls();
+    $("leadDialog").showModal();
+    $("leadDialog").querySelector(".dialog-body").scrollTop=0;
+    updateViewport();syncDialogLayout();
+  }
+  function closeDetail() {
+    if (state.busy) return;
+    $("leadDialog").close();state.selected=null;
+  }
+  async function saveDetail(event) {
+    event.preventDefault();
+    if (state.busy || !state.selected) return;
+    const row=state.selected;
+    const changes={};
+    editInputs.forEach((input,key)=> { if (input.value!==C.string(row[key])) changes[key]=input.value; });
+    if ($("detailStatus").value!==C.statusOf(row,config)) changes[config.statusField]=$("detailStatus").value;
+    if (!Object.keys(changes).length) { closeDetail();return; }
+    state.busy=true;$("formError").hidden=true;controls();
+    try {
+      const updated=await client.update(row,changes,state.rows);
+      state.rows[state.rows.indexOf(row)]=updated;
+      state.activeStage=C.statusOf(updated,config);
+      state.lastSync=new Date();
+      $("leadDialog").close();state.selected=null;
+      toast("O‘zgarishlar Google Sheets’ga saqlandi.");
+    } catch(error) { $("formError").textContent=error.message;$("formError").hidden=false; }
+    finally { state.busy=false;renderBoard(); }
+  }
+  function askDelete() {
+    if (state.busy || !state.selected) return;
+    state.pendingDelete=state.selected;
+    $("deleteName").textContent=C.name(state.pendingDelete);
+    $("deleteError").hidden=true;
+    $("deleteDialog").showModal();
+    syncDialogLayout();
+  }
+  function cancelDelete() {
+    if (state.busy) return;
+    $("deleteDialog").close();state.pendingDelete=null;
+  }
+  async function confirmDelete() {
+    if (state.busy || !state.pendingDelete) return;
+    const row=state.pendingDelete;
+    state.busy=true;controls();
+    try {
+      await client.remove(row,state.rows);
+      state.rows=state.rows.filter(item=>item!==row);
+      state.lastSync=new Date();
+      $("deleteDialog").close();$("leadDialog").close();
+      state.selected=null;state.pendingDelete=null;
+      toast("Lead Google Sheets’dan o‘chirildi.");
+    } catch(error) { $("deleteError").textContent=error.message;$("deleteError").hidden=false; }
+    finally { state.busy=false;renderBoard(); }
+  }
+
+  $("sheetLink").href=config.sheetUrl;
+  $("refreshButton").addEventListener("click",()=>load(true));
+  $("retryButton").addEventListener("click",()=>load(true));
+  $("searchInput").addEventListener("input",event=> { state.query=event.target.value;renderBoard(); });
+  $("editForm").addEventListener("submit",saveDetail);
+  $("closeDetail").addEventListener("click",closeDetail);
+  $("cancelDetail").addEventListener("click",closeDetail);
+  $("deleteFromDetail").addEventListener("click",askDelete);
+  $("cancelDelete").addEventListener("click",cancelDelete);
+  $("confirmDelete").addEventListener("click",confirmDelete);
+  $("detailStatus").addEventListener("change",updateDetailTone);
+  for (const dialog of [$("leadDialog"),$("deleteDialog")]) {
+    // Dismiss only through explicit controls; backdrop clicks and Escape keep edits intact.
+    dialog.addEventListener("cancel",event=>event.preventDefault());
+    dialog.addEventListener("close",syncDialogLayout);
+  }
+  $("leadDialog").addEventListener("close",()=> { if (!state.busy) state.selected=null; });
+  $("deleteDialog").addEventListener("close",()=> { if (!state.busy) state.pendingDelete=null; });
+  document.addEventListener("keydown",event=> {
+    if (event.key==="/" && !$("leadDialog").open && !$("deleteDialog").open && !event.target.closest("input,textarea,select")) { event.preventDefault();$("searchInput").focus(); }
+  });
+  let scrollFrame=0;
+  $("boardScroll").addEventListener("scroll",()=> {
+    if (!mobileLayout.matches || scrollFrame) return;
+    scrollFrame=requestAnimationFrame(()=> {
+      scrollFrame=0;
+      const columns=Array.from($("board").children);
+      if (!columns.length) return;
+      const position=$("boardScroll").scrollLeft+columns[0].offsetLeft;
+      const closest=columns.reduce((best,column)=>Math.abs(column.offsetLeft-position)<Math.abs(best.offsetLeft-position) ? column : best);
+      if (state.activeStage!==closest.dataset.status) { state.activeStage=closest.dataset.status;markActiveStage(); }
+    });
+  },{passive:true});
+  mobileLayout.addEventListener("change",()=> { controls();if (mobileLayout.matches) selectStage(state.activeStage); });
+  touchInput.addEventListener("change",controls);
+  window.addEventListener("resize",updateViewport,{passive:true});
+  window.visualViewport?.addEventListener("resize",updateViewport,{passive:true});
+  window.visualViewport?.addEventListener("scroll",updateViewport,{passive:true});
+  updateViewport();
+  load();
+})();
+
+</script>
+</body>
+</html>
